@@ -17,7 +17,10 @@ namespace Final_Lab_Automation
         {
             var mydriver = new ChromeDriver();
             //var mydriver = new InternetExplorerDriver();
+            
             driver = mydriver;
+            // Wait before finding element in html
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(200);
         }
 
         public void close_driver()

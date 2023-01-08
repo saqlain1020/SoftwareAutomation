@@ -59,6 +59,7 @@
     <Compile Include="DriverClass.cs" />
     <Compile Include="LoginClass.cs" />
     <Compile Include="MainClass.cs" />
+    <Compile Include="ProductClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

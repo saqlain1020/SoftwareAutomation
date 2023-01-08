@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
 
 namespace Final_Lab_Automation
 {
@@ -19,11 +20,14 @@ namespace Final_Lab_Automation
         By SubmitBtn = By.CssSelector("#logInModal > div > div > div.modal-footer > button.btn.btn-primary");
         By loginModal = By.Id("login2");
         By actual = By.Id("nameofuser");
+        string url = "https://www.demoblaze.com/index.html";
 
 
-        public void LoginPositive_001(string url, string email, string pass)
+        
+        public void Login()
         {
-
+            string email = "izhan2001";
+            string pass = "hello234";
             driver.Manage().Window.Maximize();
             driver.Url = url;
             var check = driver.FindElement(loginModal);
@@ -41,16 +45,11 @@ namespace Final_Lab_Automation
             }
             string actualText = driver.FindElement(actual).Text;
             Assert.AreEqual("Welcome " + email, actualText, "AssertFailed and Login not performed");
-            //driver.Close();
-
-
         }
 
 
-        public void LoginNegative_001(string url)
+        public void LoginEmpty()
         {
- 
-
             driver.Manage().Window.Maximize();
             driver.Url = url;
             driver.FindElement(loginModal).Click();
@@ -62,9 +61,26 @@ namespace Final_Lab_Automation
             string actualText = driver.SwitchTo().Alert().Text;
             driver.SwitchTo().Alert().Accept();
             Assert.AreEqual("Please fill out Username and Password.", actualText, "Assert Failed");
-            //driver.Close();
+        }
 
-
+        public void LoginWrongPass()
+        {
+            string email = "izhan2001";
+            string pass= "abc";
+            driver.Manage().Window.Maximize();
+            driver.Url = url;
+            driver.FindElement(loginModal).Click();
+            if (!driver.FindElement(SubmitBtn).Displayed)
+            {
+                Thread.Sleep(3000);
+            }
+            driver.FindElement(userEmail).SendKeys(email);
+            driver.FindElement(userPass).SendKeys(pass);
+            driver.FindElement(SubmitBtn).Click();
+            Thread.Sleep(3000);
+            string actualText = driver.SwitchTo().Alert().Text;
+            driver.SwitchTo().Alert().Accept();
+            Assert.AreEqual("Wrong password.", actualText, "Assert Failed");
         }
     }
 }
