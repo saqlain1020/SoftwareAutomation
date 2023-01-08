@@ -32,18 +32,18 @@ namespace Final_Lab_Automation
             driver.Url = url;
             var check = driver.FindElement(loginModal);
             check.Click();
-            if (!driver.FindElement(userEmail).Displayed)
-            {
-                Thread.Sleep(3000);
-            }
-            driver.FindElement(userEmail).SendKeys(email);
+            //if (!driver.FindElement(userEmail).Displayed)
+            //{
+            //    Thread.Sleep(3000);
+            //}
+            WaitForElement(userEmail).SendKeys(email);
             driver.FindElement(userPass).SendKeys(pass);
             driver.FindElement(SubmitBtn).Click();
-            if (!driver.FindElement(actual).Displayed)
-            {
-                Thread.Sleep(6000);
-            }
-            string actualText = driver.FindElement(actual).Text;
+            //if (!driver.FindElement(actual).Displayed)
+            //{
+            //    Thread.Sleep(6000);
+            //}
+            string actualText = WaitForElement(actual).Text;
             Assert.AreEqual("Welcome " + email, actualText, "AssertFailed and Login not performed");
         }
 

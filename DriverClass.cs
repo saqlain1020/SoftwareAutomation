@@ -1,6 +1,8 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.IE;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +14,7 @@ namespace Final_Lab_Automation
     public class DriverClass
     {
         public static IWebDriver driver;
-        //public static WebDriver driver;
+        public static WebDriverWait wait;
         public void Selenium_driver()
         {
             var mydriver = new ChromeDriver();
@@ -20,7 +22,10 @@ namespace Final_Lab_Automation
             
             driver = mydriver;
             // Wait before finding element in html
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(200);
+            //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(200);
+
+            // Wait with timeout
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
         }
 
         public void close_driver()
@@ -28,5 +33,9 @@ namespace Final_Lab_Automation
             driver.Close();
         }
 
+        public IWebElement WaitForElement(By by)
+        {   
+          return wait.Until(ExpectedConditions.ElementIsVisible(by));
+        }
     }
 }

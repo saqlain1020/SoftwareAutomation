@@ -26,13 +26,18 @@ namespace Final_Lab_Automation
             this.url = "https://www.demoblaze.com/prod.html?idp_=" + pid;
             driver.Url= url;
             //Thread.Sleep(2000);
-            this.price = int.Parse(driver.FindElement(productPrice).Text.Split()[0].Remove(0, 1));
-            this.name = driver.FindElement(nameHeading).Text;
+            this.price = int.Parse(WaitForElement(productPrice).Text.Split()[0].Remove(0, 1));
+            this.name = WaitForElement(nameHeading).Text;
         }
 
         public void checkProductName(string name)
         {
             Assert.AreEqual(name, this.name, "AssertFailed and Product name does not match");
+        }
+
+        public void checkProductPrice(int price)
+        {
+            Assert.AreEqual(price, this.price, "AssertFailed and Product price does not match");
         }
 
         public void addToCart()
@@ -41,7 +46,7 @@ namespace Final_Lab_Automation
             Thread.Sleep(2000);
             string actualText = driver.SwitchTo().Alert().Text;
             driver.SwitchTo().Alert().Accept();
-            Assert.AreEqual("Product added", actualText, "AssertFailed");
+            Assert.AreEqual("Product added.", actualText, "AssertFailed");
         }
     }
 }
