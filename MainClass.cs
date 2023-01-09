@@ -112,6 +112,44 @@ namespace Final_Lab_Automation
             cart.emptyCart();
             driverClass.close_driver();
         }
+
+        [TestMethod]
+        [TestCategory("Cart")]
+        public void TestCase_010()
+        {
+            driverClass.Selenium_driver();
+            LoginPage login = new LoginPage();
+            ProductPage product = new ProductPage();
+            CartPage cart = new CartPage();
+            product.openProductPage("1");
+            product.addToCart();
+            cart.openCartPage();
+            login.Login();
+            cart.isCartEmpty();
+            driverClass.close_driver();
+        }
+
+        [TestMethod]
+        [TestCategory("Checkout")]
+        public void TestCase_011()
+        {
+            driverClass.Selenium_driver();
+            CartPage cart = new CartPage();
+            cart.checkout();
+            driverClass.close_driver();
+        }
+
+        [TestMethod]
+        [TestCategory("Checkout")]
+        public void TestCase_012()
+        {
+            driverClass.Selenium_driver();
+            CartPage cart = new CartPage();
+            bool isCorrectFormat = cart.CreditCardFormat("4012888888881881");
+            cart.checkout("Sumaiya" , "4012888888881881");
+            Assert.AreEqual(true, isCorrectFormat,"assert Failed, Creit Cart format not valid but checkout performed");
+            driverClass.close_driver();
+        }
     }
 }
     

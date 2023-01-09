@@ -46,7 +46,7 @@ namespace Final_Lab_Automation
             Thread.Sleep(2000);
             string actualText = driver.SwitchTo().Alert().Text;
             driver.SwitchTo().Alert().Accept();
-            Assert.AreEqual("Product added.", actualText, "AssertFailed");
+            Assert.AreEqual("Product added", actualText, "AssertFailed");
         }
     }
 }

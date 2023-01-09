@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Threading;
 using OpenQA.Selenium;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Text.RegularExpressions;
+
 
 namespace Final_Lab_Automation
 {
@@ -15,6 +17,10 @@ namespace Final_Lab_Automation
         By title = By.CssSelector("#page-wrapper > div > div.col-lg-8 > h2");
         By deleteBtn = By.CssSelector("#tbodyid > tr > td:nth-child(4) > a");
         By table = By.Id("tbodyid");
+        By checkoutName = By.Id("name");
+        By chckoutCreditCard = By.Id("card");
+        By checkoutSubmit = By.CssSelector("#orderModal > div > div > div.modal-footer > button.btn.btn-primary");
+        By checkoutActualText = By.CssSelector("body > div.sweet-alert.showSweetAlert.visible > h2");
 
         public void openCartPage()
         {
@@ -52,6 +58,50 @@ namespace Final_Lab_Automation
             if (getProductsQty() == 0) return;
             WaitForElement(deleteBtn).Click();
             emptyCart();
+        }
+
+        public void isCartEmpty()
+        {
+            bool isEmptyExpected = false;
+            driver.Url = url;
+            if (getProductsQty() == 0)
+            {
+                Assert.AreEqual(isEmptyExpected, true, "assert failed, cart is empty");
+            }
+            else
+            {
+                Assert.AreEqual(isEmptyExpected, false, "assert failed");
+            }
+            
+        }
+
+        public bool CreditCardFormat(string inputCreditCardNumber)
+        {
+            driver.Url = url;
+            string creditCardPattern = @"^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$";
+            return Regex.IsMatch(inputCreditCardNumber, creditCardPattern);
+        }
+
+        public void checkout(string name,string creditCardNumber)
+        {
+            driver.Url=url;
+            driver.FindElement(By.CssSelector("#page-wrapper > div > div.col-lg-1 > button")).Click();
+            WaitForElement(checkoutName).SendKeys(name);
+            driver.FindElement(chckoutCreditCard).SendKeys(creditCardNumber);
+            driver.FindElement(checkoutSubmit).Click();
+            string actualText = WaitForElement(checkoutActualText).Text;
+            Assert.AreEqual("Thank you for your purchase!", actualText, "Assert Failed, checkout completed");
+        }
+
+        public void checkout()
+        {
+            driver.Url = url;
+            driver.FindElement(By.CssSelector("#page-wrapper > div > div.col-lg-1 > button")).Click();
+            WaitForElement(checkoutName);
+            driver.FindElement(checkoutSubmit).Click();
+            string actualText = driver.SwitchTo().Alert().Text;
+            driver.SwitchTo().Alert().Accept();
+            Assert.AreEqual("Please fill out Name and Creditcard.", actualText, "assert failed");
         }
     }
 }
