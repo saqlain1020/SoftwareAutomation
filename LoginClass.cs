@@ -20,6 +20,7 @@ namespace Final_Lab_Automation
         By SubmitBtn = By.CssSelector("#logInModal > div > div > div.modal-footer > button.btn.btn-primary");
         By loginModal = By.Id("login2");
         By actual = By.Id("nameofuser");
+        By logOutBtn = By.Id("logout2");
         string url = "https://www.demoblaze.com/index.html";
 
 
@@ -63,10 +64,8 @@ namespace Final_Lab_Automation
             Assert.AreEqual("Please fill out Username and Password.", actualText, "Assert Failed");
         }
 
-        public void LoginWrongPass()
+        public void LoginWrongPass(string email , string pass)
         {
-            string email = "izhan2001";
-            string pass= "abc";
             driver.Manage().Window.Maximize();
             driver.Url = url;
             driver.FindElement(loginModal).Click();
@@ -81,6 +80,29 @@ namespace Final_Lab_Automation
             string actualText = driver.SwitchTo().Alert().Text;
             driver.SwitchTo().Alert().Accept();
             Assert.AreEqual("Wrong password.", actualText, "Assert Failed");
+        }
+        
+        public void LoginWrongUsername(string email , string pass)
+        {
+            driver.Manage().Window.Maximize();
+            driver.Url = url;
+            driver.FindElement(loginModal).Click();
+            if (!driver.FindElement(SubmitBtn).Displayed)
+            {
+                Thread.Sleep(3000);
+            }
+            driver.FindElement(userEmail).SendKeys(email);
+            driver.FindElement(userPass).SendKeys(pass);
+            driver.FindElement(SubmitBtn).Click();
+            Thread.Sleep(3000);
+            string actualText = driver.SwitchTo().Alert().Text;
+            driver.SwitchTo().Alert().Accept();
+            Assert.AreEqual("User does not exist.", actualText, "Assert Failed");
+        }
+
+        public void Logout()
+        {
+            WaitForElement(logOutBtn).Click();
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Final_Lab_Automation
         public void TestCase_003()
         {
             driverClass.Selenium_driver();
-            loginpage.LoginWrongPass();
+            loginpage.LoginWrongPass("izhan2001","abc");
             driverClass.close_driver();
         }
 
@@ -121,11 +121,15 @@ namespace Final_Lab_Automation
             LoginPage login = new LoginPage();
             ProductPage product = new ProductPage();
             CartPage cart = new CartPage();
+            login.Login();
+            cart.openCartPage();
+            int qty = cart.getProductsQty();
             product.openProductPage("1");
             product.addToCart();
             cart.openCartPage();
-            login.Login();
-            cart.isCartEmpty();
+            int newQty = cart.getProductsQty();
+            qty++;
+            Assert.AreEqual(qty, newQty , "Assert Failed, Product not added to cart, Quantity not updatedd");
             driverClass.close_driver();
         }
 
@@ -145,9 +149,44 @@ namespace Final_Lab_Automation
         {
             driverClass.Selenium_driver();
             CartPage cart = new CartPage();
+            //bool isCorrectFormat = cart.CreditCardFormat("40312412");
             bool isCorrectFormat = cart.CreditCardFormat("4012888888881881");
             cart.checkout("Sumaiya" , "4012888888881881");
             Assert.AreEqual(true, isCorrectFormat,"assert Failed, Creit Cart format not valid but checkout performed");
+            driverClass.close_driver();
+        }
+        
+        [TestMethod]
+        [TestCategory("Checkout")]
+        public void TestCase_013()
+        {
+            driverClass.Selenium_driver();
+            CartPage cart = new CartPage();
+            bool isCorrectFormat = cart.CreditCardFormat("45034");
+            //bool isCorrectFormat = cart.CreditCardFormat("4012888888881881");
+            cart.checkout("Sumaiya" , "45034","Pakistan","Karachi","05","2025");
+            Assert.AreEqual(true, isCorrectFormat,"assert Failed, Creit Cart format not valid but checkout performed");
+            driverClass.close_driver();
+        }
+        
+        [TestMethod]
+        [TestCategory("Login-Negative")]
+        public void TestCase_014()
+        {
+            driverClass.Selenium_driver();
+            loginpage.LoginWrongUsername("maaz","hello");
+            driverClass.close_driver();
+        }
+        
+        [TestMethod]
+        [TestCategory("Cart")]
+        public void TestCase_015()
+        {
+            CartPage cart = new CartPage();
+            LoginPage login = new LoginPage();
+            driverClass.Selenium_driver();
+            login.Login();
+            cart.cartAmountCheck();
             driverClass.close_driver();
         }
     }

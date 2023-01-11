@@ -19,8 +19,13 @@ namespace Final_Lab_Automation
         By table = By.Id("tbodyid");
         By checkoutName = By.Id("name");
         By chckoutCreditCard = By.Id("card");
+        By countryInput = By.Id("country");
+        By cityInput = By.Id("city");
+        By monthInput = By.Id("month");
+        By yearInput = By.Id("year");
         By checkoutSubmit = By.CssSelector("#orderModal > div > div > div.modal-footer > button.btn.btn-primary");
         By checkoutActualText = By.CssSelector("body > div.sweet-alert.showSweetAlert.visible > h2");
+        By totalPrice = By.Id("totalp");
 
         public void openCartPage()
         {
@@ -30,7 +35,7 @@ namespace Final_Lab_Automation
         }
 
 
-        int getProductsQty()
+       public int getProductsQty()
         {
             try
             {
@@ -90,7 +95,7 @@ namespace Final_Lab_Automation
             driver.FindElement(chckoutCreditCard).SendKeys(creditCardNumber);
             driver.FindElement(checkoutSubmit).Click();
             string actualText = WaitForElement(checkoutActualText).Text;
-            Assert.AreEqual("Thank you for your purchase!", actualText, "Assert Failed, checkout completed");
+            Assert.AreNotEqual("Thank you for your purchase!", actualText, "Assert Failed, checkout completed but rest fields should be required fields too");
         }
 
         public void checkout()
@@ -102,6 +107,41 @@ namespace Final_Lab_Automation
             string actualText = driver.SwitchTo().Alert().Text;
             driver.SwitchTo().Alert().Accept();
             Assert.AreEqual("Please fill out Name and Creditcard.", actualText, "assert failed");
+        }
+        
+        public void checkout(string name, string creditCardNumber,string country , string city, string month , string year)
+        {
+            driver.Url = url;
+            driver.FindElement(By.CssSelector("#page-wrapper > div > div.col-lg-1 > button")).Click();
+            WaitForElement(checkoutName).SendKeys(name);
+            driver.FindElement(countryInput).SendKeys(country);
+            driver.FindElement(cityInput).SendKeys(city);
+            driver.FindElement(chckoutCreditCard).SendKeys(creditCardNumber);
+            driver.FindElement(monthInput).SendKeys(month);
+            driver.FindElement(yearInput).SendKeys(year);
+            driver.FindElement(checkoutSubmit).Click();
+            string actualText = WaitForElement(checkoutActualText).Text;
+            Assert.AreEqual("Thank you for your purchase!", actualText, "assert failed,Checkout not performed");
+        }
+
+
+        public void cartAmountCheck()
+        {
+            driver.Url=url;
+            int qty = getProductsQty();
+            int [] arr = new int[qty];
+            for (int i = 0; i < qty; i++)
+            {
+               arr[i] = Int32.Parse(driver.FindElement(By.CssSelector("#tbodyid > tr:nth-child("+(i+1)+") > td:nth-child(3)")).Text);
+
+            }
+
+            int calculatedTotal = arr.Sum();
+            int actualTotal = Int32.Parse(driver.FindElement(totalPrice).Text);
+
+            Assert.AreEqual(calculatedTotal, actualTotal, "Assert Failed, both totals are not same");
+            
+
         }
     }
 }
