@@ -25,7 +25,7 @@ namespace Final_Lab_Automation
             //driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(200);
 
             // Wait with timeout
-            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
         }
 
         public void close_driver()
