@@ -59,19 +59,26 @@ namespace Final_Lab_Automation
 
         public void emptyCart()
         {
-            driver.Url = url;
-            if (getProductsQty() == 0) return;
+            //driver.Url = url;
+            if (getProductsQty() == 0)
+            {
+                return;
+            }
+            else
+            {
+
             WaitForElement(deleteBtn).Click();
             emptyCart();
+            }
         }
 
         public void isCartEmpty()
         {
-            bool isEmptyExpected = false;
+            bool isEmptyExpected = true;
             driver.Url = url;
             if (getProductsQty() == 0)
             {
-                Assert.AreEqual(isEmptyExpected, true, "assert failed, cart is empty");
+                Assert.AreEqual(isEmptyExpected, true, "assert failed, cart is not empty");
             }
             else
             {
@@ -122,6 +129,22 @@ namespace Final_Lab_Automation
             driver.FindElement(checkoutSubmit).Click();
             string actualText = WaitForElement(checkoutActualText).Text;
             Assert.AreEqual("Thank you for your purchase!", actualText, "assert failed,Checkout not performed");
+        }
+        
+        public void checkoutEmptyCart(string name, string creditCardNumber,string country , string city, string month , string year)
+        {
+            openCartPage();
+            emptyCart();
+            driver.FindElement(By.CssSelector("#page-wrapper > div > div.col-lg-1 > button")).Click();
+            WaitForElement(checkoutName).SendKeys(name);
+            driver.FindElement(countryInput).SendKeys(country);
+            driver.FindElement(cityInput).SendKeys(city);
+            driver.FindElement(chckoutCreditCard).SendKeys(creditCardNumber);
+            driver.FindElement(monthInput).SendKeys(month);
+            driver.FindElement(yearInput).SendKeys(year);
+            driver.FindElement(checkoutSubmit).Click();
+            string actualText = WaitForElement(checkoutActualText).Text;
+            Assert.AreNotEqual("Thank you for your purchase!", actualText, "assert failed,Checkout performed With Empty Cart as well.");
         }
 
 

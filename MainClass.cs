@@ -110,6 +110,7 @@ namespace Final_Lab_Automation
             login.Login();
             cart.openCartPage();
             cart.emptyCart();
+            cart.isCartEmpty();
             driverClass.close_driver();
         }
 
@@ -170,7 +171,7 @@ namespace Final_Lab_Automation
         }
         
         [TestMethod]
-        [TestCategory("Login-Negative")]
+        [TestCategory("Login_Negative")]
         public void TestCase_014()
         {
             driverClass.Selenium_driver();
@@ -187,6 +188,17 @@ namespace Final_Lab_Automation
             driverClass.Selenium_driver();
             login.Login();
             cart.cartAmountCheck();
+            driverClass.close_driver();
+        }
+        
+        
+        [TestMethod]
+        [TestCategory("Checkout")]
+        public void TestCase_016()
+        {
+            CartPage cart = new CartPage();
+            driverClass.Selenium_driver();
+            cart.checkoutEmptyCart("Sumaiya", "4012888888881881", "Pakistan", "Karachi", "05", "2025");
             driverClass.close_driver();
         }
     }

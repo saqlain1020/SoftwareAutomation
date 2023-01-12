@@ -23,7 +23,7 @@ namespace Final_Lab_Automation
         public void openProductPage(string pid)
         {
             this.pid = pid;
-            this.url = "https://www.demoblaze.com/prod.html?idp_=" + pid;
+            this.url = "https://www.demoblaze.com/prod.html?idp_=" + this.pid;
             driver.Url= url;
             //Thread.Sleep(2000);
             this.price = int.Parse(WaitForElement(productPrice).Text.Split()[0].Remove(0, 1));
