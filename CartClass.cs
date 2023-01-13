@@ -152,17 +152,25 @@ namespace Final_Lab_Automation
         {
             driver.Url=url;
             int qty = getProductsQty();
-            int [] arr = new int[qty];
-            for (int i = 0; i < qty; i++)
+
+            if(qty== 0)
             {
-               arr[i] = Int32.Parse(driver.FindElement(By.CssSelector("#tbodyid > tr:nth-child("+(i+1)+") > td:nth-child(3)")).Text);
-
+                return;
             }
+            else
+            {
+                int [] arr = new int[qty];
+                for (int i = 0; i < qty; i++)
+                {
+                   arr[i] = Int32.Parse(driver.FindElement(By.CssSelector("#tbodyid > tr:nth-child("+(i+1)+") > td:nth-child(3)")).Text);
 
-            int calculatedTotal = arr.Sum();
-            int actualTotal = Int32.Parse(driver.FindElement(totalPrice).Text);
+                }
 
-            Assert.AreEqual(calculatedTotal, actualTotal, "Assert Failed, both totals are not same");
+                int calculatedTotal = arr.Sum();
+                int actualTotal = Int32.Parse(driver.FindElement(totalPrice).Text);
+
+                Assert.AreEqual(calculatedTotal, actualTotal, "Assert Failed, both totals are not same");
+            }
             
 
         }

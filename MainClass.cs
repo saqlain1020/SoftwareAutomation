@@ -14,7 +14,7 @@ namespace Final_Lab_Automation
         [TestCategory("Login_Positive")]
         public void TestCase_001()
         {
-            driverClass.Selenium_driver();
+            driverClass.Selenium_driver("edge");
             loginpage.Login();
             driverClass.close_driver();
 
@@ -24,7 +24,7 @@ namespace Final_Lab_Automation
         [TestCategory("Login_Negative")]
         public void TestCase_002()
         {
-            driverClass.Selenium_driver();
+            driverClass.Selenium_driver("edge");
             loginpage.LoginEmpty();
             driverClass.close_driver();
         }
@@ -33,7 +33,7 @@ namespace Final_Lab_Automation
         [TestCategory("Login_Negative")]
         public void TestCase_003()
         {
-            driverClass.Selenium_driver();
+            driverClass.Selenium_driver("edge");
             loginpage.LoginWrongPass("izhan2001","abc");
             driverClass.close_driver();
         }
@@ -42,7 +42,7 @@ namespace Final_Lab_Automation
         [TestCategory("ProductPage")]
         public void TestCase_004()
         {
-            driverClass.Selenium_driver();
+            driverClass.Selenium_driver("edge");
             ProductPage product = new ProductPage();
             product.openProductPage("1");
             product.checkProductName("Samsung galaxy s6");            
@@ -53,7 +53,7 @@ namespace Final_Lab_Automation
         [TestCategory("ProductPage"),TestCategory("Cart")]
         public void TestCase_005()
         {
-            driverClass.Selenium_driver();
+            driverClass.Selenium_driver("edge");
             LoginPage login = new LoginPage();
             ProductPage product = new ProductPage();
             login.Login();
@@ -66,7 +66,7 @@ namespace Final_Lab_Automation
         [TestCategory("ProductPage")]
         public void TestCase_006()
         {
-            driverClass.Selenium_driver();
+            driverClass.Selenium_driver("edge");
             ProductPage product = new ProductPage();
             product.openProductPage("1");
             product.checkProductPrice(360);
@@ -77,7 +77,7 @@ namespace Final_Lab_Automation
         [TestCategory("Cart")]
         public void TestCase_007()
         {
-            driverClass.Selenium_driver();
+            driverClass.Selenium_driver("edge");
             CartPage cart = new CartPage();
             cart.openCartPage();
             driverClass.close_driver();
@@ -86,7 +86,7 @@ namespace Final_Lab_Automation
         [TestMethod]
         [TestCategory("Cart"), TestCategory("ProductPage")]
         public void TestCase_008() {
-            driverClass.Selenium_driver();
+            driverClass.Selenium_driver("edge");
             LoginPage login = new LoginPage();            
             ProductPage product = new ProductPage();
             CartPage cart = new CartPage();
@@ -104,7 +104,7 @@ namespace Final_Lab_Automation
         [TestCategory("Cart")]
         public void TestCase_009()
         {
-            driverClass.Selenium_driver();
+            driverClass.Selenium_driver("edge");
             LoginPage login = new LoginPage();
             CartPage cart = new CartPage();
             login.Login();
@@ -118,7 +118,7 @@ namespace Final_Lab_Automation
         [TestCategory("Cart")]
         public void TestCase_010()
         {
-            driverClass.Selenium_driver();
+            driverClass.Selenium_driver("edge");
             LoginPage login = new LoginPage();
             ProductPage product = new ProductPage();
             CartPage cart = new CartPage();
@@ -138,7 +138,7 @@ namespace Final_Lab_Automation
         [TestCategory("Checkout")]
         public void TestCase_011()
         {
-            driverClass.Selenium_driver();
+            driverClass.Selenium_driver("edge");
             CartPage cart = new CartPage();
             cart.checkout();
             driverClass.close_driver();
@@ -148,7 +148,7 @@ namespace Final_Lab_Automation
         [TestCategory("Checkout")]
         public void TestCase_012()
         {
-            driverClass.Selenium_driver();
+            driverClass.Selenium_driver("edge");
             CartPage cart = new CartPage();
             //bool isCorrectFormat = cart.CreditCardFormat("40312412");
             bool isCorrectFormat = cart.CreditCardFormat("4012888888881881");
@@ -161,7 +161,7 @@ namespace Final_Lab_Automation
         [TestCategory("Checkout")]
         public void TestCase_013()
         {
-            driverClass.Selenium_driver();
+            driverClass.Selenium_driver("edge");
             CartPage cart = new CartPage();
             bool isCorrectFormat = cart.CreditCardFormat("45034");
             //bool isCorrectFormat = cart.CreditCardFormat("4012888888881881");
@@ -174,7 +174,7 @@ namespace Final_Lab_Automation
         [TestCategory("Login_Negative")]
         public void TestCase_014()
         {
-            driverClass.Selenium_driver();
+            driverClass.Selenium_driver("edge");
             loginpage.LoginWrongUsername("maaz","hello");
             driverClass.close_driver();
         }
@@ -185,7 +185,7 @@ namespace Final_Lab_Automation
         {
             CartPage cart = new CartPage();
             LoginPage login = new LoginPage();
-            driverClass.Selenium_driver();
+            driverClass.Selenium_driver("edge");
             login.Login();
             cart.cartAmountCheck();
             driverClass.close_driver();
@@ -197,7 +197,7 @@ namespace Final_Lab_Automation
         public void TestCase_016()
         {
             CartPage cart = new CartPage();
-            driverClass.Selenium_driver();
+            driverClass.Selenium_driver("edge");
             cart.checkoutEmptyCart("Sumaiya", "4012888888881881", "Pakistan", "Karachi", "05", "2025");
             driverClass.close_driver();
         }
